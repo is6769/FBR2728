@@ -10,7 +10,6 @@ const darkMode = ref(false)
 const previewBg = computed(() => darkMode.value ? '#1a1a2e' : '#ffffff')
 const previewText = computed(() => darkMode.value ? '#f0f0f5' : '#1a1a2e')
 
-// Используем цвета палитры для элементов
 const primaryColor = computed(() => colors.value[0] || '#7C5CFF')
 const secondaryColor = computed(() => colors.value[1] || '#5C9CFF')
 const accentColor = computed(() => colors.value[2] || '#4ECDC4')
@@ -344,4 +343,5 @@ const cardBgColor = computed(() => darkMode.value ? colors.value[3] : colors.val
   }
 }
 </style>
+
 

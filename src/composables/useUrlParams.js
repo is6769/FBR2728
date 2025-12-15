@@ -10,9 +10,7 @@ export function useUrlParams() {
 
     if (colorsParam) {
       const parsedColors = colorsParam.split('-').map(c => {
-        // Добавляем # если его нет
         const hex = c.startsWith('#') ? c : `#${c}`
-        // Проверяем валидность HEX
         if (/^#[0-9A-Fa-f]{6}$/.test(hex)) {
           return hex.toUpperCase()
         }
@@ -23,9 +21,7 @@ export function useUrlParams() {
         colors.value = parsedColors
       }
 
-      // Очищаем URL после загрузки
       window.history.replaceState({}, '', window.location.pathname)
     }
   })
 }
-

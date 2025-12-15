@@ -15,7 +15,7 @@ const {
 const { showToast, copyToClipboard } = useToast()
 
 const searchQuery = ref('')
-const filterMode = ref('all') // all, favorites
+const filterMode = ref('all')
 const editingPalette = ref(null)
 const editName = ref('')
 const editTags = ref('')
@@ -23,12 +23,10 @@ const editTags = ref('')
 const filteredPalettes = computed(() => {
   let palettes = savedPalettes.value
 
-  // Фильтр по избранному
   if (filterMode.value === 'favorites') {
     palettes = palettes.filter(p => p.isFavorite)
   }
 
-  // Поиск
   if (searchQuery.value.trim()) {
     const query = searchQuery.value.toLowerCase()
     palettes = palettes.filter(p =>
@@ -286,7 +284,6 @@ function formatDate(dateString) {
   font-size: 1.1rem;
 }
 
-/* Панель управления */
 .library-controls {
   display: flex;
   gap: 1rem;
@@ -318,7 +315,6 @@ function formatDate(dateString) {
   gap: 0.5rem;
 }
 
-/* Сетка палитр */
 .palettes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -384,7 +380,6 @@ function formatDate(dateString) {
   color: var(--text-muted);
 }
 
-/* Полоса цветов */
 .color-strip {
   display: flex;
   height: 80px;
@@ -414,7 +409,6 @@ function formatDate(dateString) {
   opacity: 0.8;
 }
 
-/* Теги */
 .card-tags {
   display: flex;
   flex-wrap: wrap;
@@ -430,7 +424,6 @@ function formatDate(dateString) {
   color: var(--text-secondary);
 }
 
-/* Действия */
 .card-actions {
   display: flex;
   gap: 0.5rem;
@@ -446,7 +439,6 @@ function formatDate(dateString) {
   background: rgba(255, 107, 107, 0.15);
 }
 
-/* Редактирование */
 .edit-form {
   padding: 1.25rem;
   display: flex;
@@ -473,7 +465,6 @@ function formatDate(dateString) {
   padding-top: 0.5rem;
 }
 
-/* Пустое состояние */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -509,4 +500,5 @@ function formatDate(dateString) {
   }
 }
 </style>
+
 

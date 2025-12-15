@@ -10,16 +10,12 @@ const centerX = wheelSize / 2
 const centerY = wheelSize / 2
 const radius = 80
 
-// Вычисляем позиции цветов на цветовом круге
 const colorPositions = computed(() => {
   return colors.value.map((color, index) => {
     const hsl = hexToHsl(color)
     if (!hsl) return null
 
-    // Угол определяется оттенком (hue)
-    const angle = (hsl.h - 90) * (Math.PI / 180) // -90 чтобы 0° было сверху
-
-    // Расстояние от центра определяется насыщенностью
+    const angle = (hsl.h - 90) * (Math.PI / 180)
     const distance = (hsl.s / 100) * radius
 
     const x = centerX + Math.cos(angle) * distance
@@ -36,7 +32,6 @@ const colorPositions = computed(() => {
   }).filter(Boolean)
 })
 
-// Соединительные линии между цветами
 const connectionLines = computed(() => {
   const lines = []
   for (let i = 0; i < colorPositions.value.length - 1; i++) {
@@ -47,7 +42,6 @@ const connectionLines = computed(() => {
       y2: colorPositions.value[i + 1].y
     })
   }
-  // Замыкаем круг
   if (colorPositions.value.length > 2) {
     const last = colorPositions.value.length - 1
     lines.push({
@@ -249,4 +243,5 @@ const connectionLines = computed(() => {
   color: var(--text-muted);
 }
 </style>
+
 

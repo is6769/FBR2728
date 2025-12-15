@@ -8,7 +8,7 @@ const { colors, currentPaletteName } = usePalette()
 const { copyToClipboard, showToast } = useToast()
 
 const exportFormat = ref('css')
-const colorNaming = ref('semantic') // semantic, indexed
+const colorNaming = ref('semantic')
 
 const colorNames = ['primary', 'secondary', 'accent', 'background', 'highlight', 'muted', 'contrast']
 
@@ -19,14 +19,11 @@ function getColorName(index) {
   return colorNames[index] || `color-${index + 1}`
 }
 
-// Генерация CSS Variables
 const cssVariablesCode = computed(() => {
   const lines = [':root {']
   colors.value.forEach((color, index) => {
     const name = getColorName(index)
     lines.push(`  --${name}: ${color};`)
-
-    // Добавляем RGB версию
     const rgb = hexToRgb(color)
     if (rgb) {
       lines.push(`  --${name}-rgb: ${rgb.r}, ${rgb.g}, ${rgb.b};`)
@@ -36,16 +33,13 @@ const cssVariablesCode = computed(() => {
   return lines.join('\n')
 })
 
-// Генерация SCSS Variables
 const scssVariablesCode = computed(() => {
-  const lines = ['// Цветовая палитра']
+  const lines = []
   colors.value.forEach((color, index) => {
     const name = getColorName(index)
     lines.push(`$${name}: ${color};`)
   })
-
   lines.push('')
-  lines.push('// Карта цветов')
   lines.push('$colors: (')
   colors.value.forEach((color, index) => {
     const name = getColorName(index)
@@ -53,11 +47,9 @@ const scssVariablesCode = computed(() => {
     lines.push(`  "${name}": $${name}${comma}`)
   })
   lines.push(');')
-
   return lines.join('\n')
 })
 
-// Генерация Tailwind Config
 const tailwindConfigCode = computed(() => {
   const colorEntries = colors.value.map((color, index) => {
     const name = getColorName(index)
@@ -76,7 +68,6 @@ ${colorEntries}
 }`
 })
 
-// Генерация JSON
 const jsonCode = computed(() => {
   const obj = {}
   colors.value.forEach((color, index) => {
@@ -92,12 +83,10 @@ const jsonCode = computed(() => {
   return JSON.stringify(obj, null, 2)
 })
 
-// Генерация массива
 const arrayCode = computed(() => {
   return `const palette = [\n  ${colors.value.map(c => `'${c}'`).join(',\n  ')}\n];`
 })
 
-// Генерация объекта цветов
 const objectCode = computed(() => {
   const entries = colors.value.map((color, index) => {
     const name = getColorName(index)
@@ -146,10 +135,9 @@ function downloadCode() {
   showToast(`Файл ${filename} скачан`, 'success')
 }
 
-// Генерация ссылки для шаринга
 const shareLink = computed(() => {
   const colorsParam = colors.value.map(c => c.replace('#', '')).join('-')
-  return `${window.location.origin}?colors=${colorsParam}`
+  return `https://is6769.github.io/FBR2728/?colors=${colorsParam}`
 })
 
 function copyShareLink() {
@@ -404,7 +392,6 @@ function copyShareLink() {
   margin-bottom: 1rem;
 }
 
-/* Текущая палитра */
 .current-palette {
   margin-bottom: 2rem;
 }
@@ -442,7 +429,6 @@ function copyShareLink() {
   font-size: 0.75rem;
 }
 
-/* Опции экспорта */
 .export-options {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -478,7 +464,6 @@ function copyShareLink() {
   flex-wrap: wrap;
 }
 
-/* Блок кода */
 .code-section {
   margin-bottom: 2rem;
 }
@@ -518,7 +503,6 @@ function copyShareLink() {
   line-height: 1.6;
 }
 
-/* Шаринг */
 .share-section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -537,7 +521,6 @@ function copyShareLink() {
   font-size: 0.85rem;
 }
 
-/* Превью компонентов */
 .components-preview {
   margin-bottom: 2rem;
 }
@@ -673,4 +656,5 @@ function copyShareLink() {
   }
 }
 </style>
+
 

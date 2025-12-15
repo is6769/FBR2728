@@ -17,10 +17,7 @@ const {
   updateColor
 } = usePalette()
 
-// Горячие клавиши
 useKeyboard()
-
-// Парсинг URL-параметров для шаринга
 useUrlParams()
 
 const activeTab = ref('preview')
@@ -137,7 +134,6 @@ const activeTab = ref('preview')
   font-size: 1.1rem;
 }
 
-/* Палитра */
 .palette-section {
   margin-bottom: 2rem;
 }
@@ -154,7 +150,6 @@ const activeTab = ref('preview')
   gap: 1rem;
 }
 
-/* Анимации карточек */
 .palette-enter-active,
 .palette-leave-active {
   transition: all 0.4s ease;
@@ -174,7 +169,6 @@ const activeTab = ref('preview')
   transition: transform 0.4s ease;
 }
 
-/* Вкладки */
 .tools-section {
   margin-bottom: 2rem;
 }
@@ -219,7 +213,6 @@ const activeTab = ref('preview')
   animation: fadeIn 0.3s ease;
 }
 
-/* Подсказки */
 .keyboard-hints {
   display: flex;
   justify-content: center;

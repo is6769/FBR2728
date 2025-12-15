@@ -8,7 +8,6 @@ import {
   MOOD_TYPES
 } from '@/utils/colorUtils'
 
-// Глобальное состояние
 const colors = ref([])
 const lockedColors = ref(new Set())
 const colorCount = ref(5)
@@ -19,7 +18,6 @@ const baseColor = ref(null)
 const savedPalettes = ref([])
 const currentPaletteName = ref('')
 
-// Инициализация из localStorage
 function initFromStorage() {
   try {
     const stored = localStorage.getItem('palette-forge-state')
@@ -42,7 +40,6 @@ function initFromStorage() {
   }
 }
 
-// Сохранение в localStorage
 function saveToStorage() {
   try {
     const state = {
@@ -67,7 +64,6 @@ function savePalettesToStorage() {
   }
 }
 
-// Генерация палитры
 function generatePalette() {
   let newColors = []
 
@@ -79,7 +75,6 @@ function generatePalette() {
     newColors = generateHarmoniousPalette(colorCount.value)
   }
 
-  // Сохраняем закреплённые цвета
   colors.value = newColors.map((color, index) => {
     if (lockedColors.value.has(index) && colors.value[index]) {
       return colors.value[index]
@@ -90,29 +85,25 @@ function generatePalette() {
   saveToStorage()
 }
 
-// Переключение блокировки цвета
 function toggleLock(index) {
   if (lockedColors.value.has(index)) {
     lockedColors.value.delete(index)
   } else {
     lockedColors.value.add(index)
   }
-  lockedColors.value = new Set(lockedColors.value) // Trigger reactivity
+  lockedColors.value = new Set(lockedColors.value)
   saveToStorage()
 }
 
-// Проверка, заблокирован ли цвет
 function isLocked(index) {
   return lockedColors.value.has(index)
 }
 
-// Изменение цвета
 function updateColor(index, newColor) {
   colors.value[index] = newColor
   saveToStorage()
 }
 
-// Сохранение палитры
 function savePalette(name, tags = []) {
   const palette = {
     id: generateId(),
@@ -128,7 +119,6 @@ function savePalette(name, tags = []) {
   return palette
 }
 
-// Загрузка палитры
 function loadPalette(palette) {
   colors.value = [...palette.colors]
   colorCount.value = palette.colors.length
@@ -137,13 +127,11 @@ function loadPalette(palette) {
   saveToStorage()
 }
 
-// Удаление палитры
 function deletePalette(id) {
   savedPalettes.value = savedPalettes.value.filter(p => p.id !== id)
   savePalettesToStorage()
 }
 
-// Обновление палитры
 function updatePalette(id, updates) {
   const index = savedPalettes.value.findIndex(p => p.id === id)
   if (index !== -1) {
@@ -152,7 +140,6 @@ function updatePalette(id, updates) {
   }
 }
 
-// Переключение избранного
 function toggleFavorite(id) {
   const palette = savedPalettes.value.find(p => p.id === id)
   if (palette) {
@@ -161,20 +148,17 @@ function toggleFavorite(id) {
   }
 }
 
-// Вычисляемые свойства
 const hasColors = computed(() => colors.value.length > 0)
 
 const favoritePalettes = computed(() =>
   savedPalettes.value.filter(p => p.isFavorite)
 )
 
-// Watcher для автосохранения
 watch([colorCount, colorFormat, paletteType, baseColor], () => {
   saveToStorage()
 })
 
 export function usePalette() {
-  // Инициализация при первом использовании
   if (colors.value.length === 0) {
     initFromStorage()
     if (colors.value.length === 0) {
@@ -183,7 +167,6 @@ export function usePalette() {
   }
 
   return {
-    // Состояние
     colors,
     lockedColors,
     colorCount,
@@ -193,16 +176,10 @@ export function usePalette() {
     baseColor,
     savedPalettes,
     currentPaletteName,
-
-    // Вычисляемые
     hasColors,
     favoritePalettes,
-
-    // Константы
     PALETTE_TYPES,
     MOOD_TYPES,
-
-    // Методы
     generatePalette,
     toggleLock,
     isLocked,
@@ -215,4 +192,3 @@ export function usePalette() {
     initFromStorage
   }
 }
-

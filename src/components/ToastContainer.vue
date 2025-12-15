@@ -79,7 +79,6 @@ const { toasts, removeToast } = useToast()
   color: var(--error);
 }
 
-/* Анимации */
 .toast-enter-active,
 .toast-leave-active {
   transition: all 0.3s ease;
@@ -103,4 +102,5 @@ const { toasts, removeToast } = useToast()
   }
 }
 </style>
+
 

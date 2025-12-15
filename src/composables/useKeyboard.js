@@ -5,7 +5,6 @@ export function useKeyboard() {
   const { generatePalette } = usePalette()
 
   function handleKeydown(event) {
-    // Игнорируем, если фокус на инпуте
     if (
       event.target.tagName === 'INPUT' ||
       event.target.tagName === 'TEXTAREA' ||
@@ -14,7 +13,6 @@ export function useKeyboard() {
       return
     }
 
-    // Пробел — генерация новой палитры
     if (event.code === 'Space') {
       event.preventDefault()
       generatePalette()
@@ -29,4 +27,3 @@ export function useKeyboard() {
     window.removeEventListener('keydown', handleKeydown)
   })
 }
-

@@ -1,8 +1,3 @@
-/**
- * Утилиты для работы с цветами
- */
-
-// Преобразование HEX в RGB
 export function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
   return result ? {
@@ -12,7 +7,6 @@ export function hexToRgb(hex) {
   } : null
 }
 
-// Преобразование RGB в HEX
 export function rgbToHex(r, g, b) {
   return '#' + [r, g, b].map(x => {
     const hex = Math.round(x).toString(16)
@@ -20,7 +14,6 @@ export function rgbToHex(r, g, b) {
   }).join('').toUpperCase()
 }
 
-// Преобразование RGB в HSL
 export function rgbToHsl(r, g, b) {
   r /= 255
   g /= 255
@@ -46,7 +39,6 @@ export function rgbToHsl(r, g, b) {
   return { h: h * 360, s: s * 100, l: l * 100 }
 }
 
-// Преобразование HSL в RGB
 export function hslToRgb(h, s, l) {
   h /= 360
   s /= 100
@@ -80,20 +72,17 @@ export function hslToRgb(h, s, l) {
   }
 }
 
-// Преобразование HEX в HSL
 export function hexToHsl(hex) {
   const rgb = hexToRgb(hex)
   if (!rgb) return null
   return rgbToHsl(rgb.r, rgb.g, rgb.b)
 }
 
-// Преобразование HSL в HEX
 export function hslToHex(h, s, l) {
   const rgb = hslToRgb(h, s, l)
   return rgbToHex(rgb.r, rgb.g, rgb.b)
 }
 
-// Генерация случайного цвета
 export function generateRandomColor() {
   const letters = '0123456789ABCDEF'
   let color = '#'
@@ -103,25 +92,21 @@ export function generateRandomColor() {
   return color
 }
 
-// Генерация гармоничной палитры на основе цветового круга
 export function generateHarmoniousPalette(count = 5, baseHue = null) {
   const hue = baseHue ?? Math.random() * 360
   const colors = []
-
-  // Золотое сечение для гармоничного распределения
   const goldenRatio = 0.618033988749895
 
   for (let i = 0; i < count; i++) {
     const h = (hue + (i * goldenRatio * 360)) % 360
-    const s = 55 + Math.random() * 30 // 55-85%
-    const l = 45 + Math.random() * 25 // 45-70%
+    const s = 55 + Math.random() * 30
+    const l = 45 + Math.random() * 25
     colors.push(hslToHex(h, s, l))
   }
 
   return colors
 }
 
-// Типы палитр
 export const PALETTE_TYPES = {
   RANDOM: 'random',
   ANALOGOUS: 'analogous',
@@ -132,7 +117,6 @@ export const PALETTE_TYPES = {
   TETRADIC: 'tetradic'
 }
 
-// Генерация палитры по типу
 export function generatePaletteByType(type, count, baseColor = null) {
   const baseHex = baseColor || generateRandomColor()
   const baseHsl = hexToHsl(baseHex)
@@ -143,7 +127,6 @@ export function generatePaletteByType(type, count, baseColor = null) {
 
   switch (type) {
     case PALETTE_TYPES.ANALOGOUS:
-      // Аналогичные цвета (соседние на круге)
       const analogousStep = 30
       for (let i = 0; i < count; i++) {
         const offset = (i - Math.floor(count / 2)) * analogousStep
@@ -152,7 +135,6 @@ export function generatePaletteByType(type, count, baseColor = null) {
       break
 
     case PALETTE_TYPES.MONOCHROMATIC:
-      // Монохромная (разная яркость одного оттенка)
       for (let i = 0; i < count; i++) {
         const lightness = 25 + (i * (50 / (count - 1 || 1)))
         const saturation = s - (i * 5)
@@ -161,7 +143,6 @@ export function generatePaletteByType(type, count, baseColor = null) {
       break
 
     case PALETTE_TYPES.TRIADIC:
-      // Триада (3 цвета на 120° друг от друга)
       for (let i = 0; i < count; i++) {
         const hue = (h + (i * 120)) % 360
         const lightness = l + (i % 2 === 0 ? 0 : 10)
@@ -170,7 +151,6 @@ export function generatePaletteByType(type, count, baseColor = null) {
       break
 
     case PALETTE_TYPES.COMPLEMENTARY:
-      // Комплементарная (противоположные цвета)
       for (let i = 0; i < count; i++) {
         const hue = i % 2 === 0 ? h : (h + 180) % 360
         const lightness = l + ((i % 3) * 10 - 10)
@@ -179,7 +159,6 @@ export function generatePaletteByType(type, count, baseColor = null) {
       break
 
     case PALETTE_TYPES.SPLIT_COMPLEMENTARY:
-      // Раздельно-комплементарная
       const splitAngles = [0, 150, 210]
       for (let i = 0; i < count; i++) {
         const angle = splitAngles[i % splitAngles.length]
@@ -189,7 +168,6 @@ export function generatePaletteByType(type, count, baseColor = null) {
       break
 
     case PALETTE_TYPES.TETRADIC:
-      // Тетрадная (4 цвета на 90° друг от друга)
       for (let i = 0; i < count; i++) {
         const hue = (h + (i * 90)) % 360
         colors.push(hslToHex(hue, s, l + (i % 2 === 0 ? 0 : 8)))
@@ -197,14 +175,12 @@ export function generatePaletteByType(type, count, baseColor = null) {
       break
 
     default:
-      // Случайная гармоничная
       return generateHarmoniousPalette(count, h)
   }
 
   return colors.slice(0, count)
 }
 
-// Настроения палитр
 export const MOOD_TYPES = {
   CALM: 'calm',
   ENERGETIC: 'energetic',
@@ -214,7 +190,6 @@ export const MOOD_TYPES = {
   SUNSET: 'sunset'
 }
 
-// Генерация палитры по настроению
 export function generatePaletteByMood(mood, count) {
   const moodSettings = {
     [MOOD_TYPES.CALM]: { hueRange: [180, 240], satRange: [20, 40], lightRange: [60, 80] },
@@ -238,7 +213,6 @@ export function generatePaletteByMood(mood, count) {
   return colors
 }
 
-// Расчёт относительной яркости по WCAG
 export function getLuminance(hex) {
   const rgb = hexToRgb(hex)
   if (!rgb) return 0
@@ -251,7 +225,6 @@ export function getLuminance(hex) {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
 
-// Расчёт контрастности между двумя цветами
 export function getContrastRatio(color1, color2) {
   const l1 = getLuminance(color1)
   const l2 = getLuminance(color2)
@@ -260,7 +233,6 @@ export function getContrastRatio(color1, color2) {
   return (lighter + 0.05) / (darker + 0.05)
 }
 
-// Проверка уровня доступности WCAG
 export function getWCAGLevel(contrastRatio) {
   if (contrastRatio >= 7) return { level: 'AAA', text: 'Отлично', class: 'wcag-aaa' }
   if (contrastRatio >= 4.5) return { level: 'AA', text: 'Хорошо', class: 'wcag-aa' }
@@ -268,17 +240,14 @@ export function getWCAGLevel(contrastRatio) {
   return { level: 'Fail', text: 'Недостаточно', class: 'wcag-fail' }
 }
 
-// Определение, тёмный или светлый цвет
 export function isColorDark(hex) {
   return getLuminance(hex) < 0.5
 }
 
-// Получение контрастного цвета для текста
 export function getContrastTextColor(hex) {
   return isColorDark(hex) ? '#FFFFFF' : '#1A1A2E'
 }
 
-// Форматирование цвета
 export function formatColor(hex, format) {
   switch (format) {
     case 'rgb': {
@@ -294,8 +263,6 @@ export function formatColor(hex, format) {
   }
 }
 
-// Генерация уникального ID
 export function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2)
 }
-

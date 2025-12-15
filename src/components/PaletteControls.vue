@@ -62,7 +62,6 @@ function clearBaseColor() {
   baseColor.value = null
 }
 
-// Сбрасываем настроение при смене типа и наоборот
 watch(paletteType, () => {
   if (paletteType.value !== PALETTE_TYPES.RANDOM) {
     moodType.value = null
@@ -306,7 +305,6 @@ watch(moodType, () => {
   flex: 1;
 }
 
-/* Модальное окно */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -354,7 +352,6 @@ watch(moodType, () => {
   border-top: 1px solid var(--border-color);
 }
 
-/* Анимации модального окна */
 .modal-enter-active,
 .modal-leave-active {
   transition: all 0.25s ease;
@@ -389,4 +386,5 @@ watch(moodType, () => {
   }
 }
 </style>
+
 

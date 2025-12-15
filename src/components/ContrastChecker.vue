@@ -5,7 +5,6 @@ import { getContrastRatio, getWCAGLevel, getContrastTextColor } from '@/utils/co
 
 const { colors } = usePalette()
 
-// Генерируем все комбинации пар цветов
 const colorPairs = computed(() => {
   const pairs = []
 
@@ -23,11 +22,9 @@ const colorPairs = computed(() => {
     }
   }
 
-  // Сортируем по контрастности (лучшие сверху)
   return pairs.sort((a, b) => parseFloat(b.ratio) - parseFloat(a.ratio))
 })
 
-// Лучшие комбинации для текста
 const bestTextCombinations = computed(() => {
   return colorPairs.value.filter(p => parseFloat(p.ratio) >= 4.5).slice(0, 3)
 })
@@ -182,7 +179,6 @@ const bestTextCombinations = computed(() => {
   margin-bottom: 1rem;
 }
 
-/* Лучшие комбинации */
 .combination-list {
   display: flex;
   flex-direction: column;
@@ -244,7 +240,6 @@ const bestTextCombinations = computed(() => {
   font-size: 0.85rem;
 }
 
-/* Все комбинации */
 .combinations-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -298,7 +293,6 @@ const bestTextCombinations = computed(() => {
   font-weight: 600;
 }
 
-/* Легенда */
 .wcag-legend {
   padding-top: 1rem;
   border-top: 1px solid var(--border-color);
@@ -356,4 +350,5 @@ const bestTextCombinations = computed(() => {
   }
 }
 </style>
+
 
